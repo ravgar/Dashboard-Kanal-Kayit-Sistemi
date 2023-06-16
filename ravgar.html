@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input {
+      margin: 10px;
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  </style>
+  <script>
+    const playSong = () => {
+      const audio = new Audio('https://www.youtube.com/watch?v=GxMEEcXTxsw');
+      audio.loop = true;
+      audio.play();
+    }
+  </script>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  
+  <button onclick="playSong()">Şarkıyı Çal</button>
+  
+  <form action="/save-settings" method="post">
+    <label for="hoşgeldinKanalı">Hoşgeldin Kanalı:</label>
+    <input type="text" id="hoşgeldinKanalı" name="hoşgeldinKanalı" required>
+    <br>
+    <label for="inviteKanalı">Invite Kanalı:</label>
+    <input type="text" id="inviteKanalı" name="inviteKanalı" required>
+    <br>
+    <label for="chatKanalı">Chat Kanalı:</label>
+    <input type="text" id="chatKanalı" name="chatKanalı" required>
+    <br>
+    <button type="submit">Ayarları Kaydet</button>
+  </form>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $('form').submit((event) => {
+      event.preventDefault();
+      
+      const hoşgeldinKanalı = $('#hoşgeldinKanalı').val();
+      const inviteKanalı = $('#inviteKanalı').val();
+      const chatKanalı = $('#chatKanalı').val();
+      
+      const data = {
+        hoşgeldinKanalı,
+        inviteKanalı,
+        chatKanalı
+      };
+      
+      $.post('/save-settings', data, (response) => {
+        console.log(response);
+        alert('Ayarlar başarıyla kaydedildi.');
+      });
+    });
+  </script>
+</body>
+</html>
